@@ -26,7 +26,7 @@
                     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
                     for(i = 0; i <= enderecos.length; i++){
-                            endereco = enderecos[i] ;
+                            endereco = enderecos[i];
                             geocoder = new google.maps.Geocoder();
                             geocode(endereco);
 
@@ -54,8 +54,8 @@
                             });
 
                             var infoWindowContent = "<div style='float: left;'>"+results[0].formatted_address+"</div>";
-                            var infowindow = new google.maps.InfoWindow({ content: infoWindowContent });
-                            google.maps.event.addListener(marker, 'click', function () {
+                            var infowindow = new google.maps.InfoWindow({content: infoWindowContent });
+                            google.maps.event.addListener(marker, 'click', function() {
                                     infowindow.open(map, marker);
                             });
 

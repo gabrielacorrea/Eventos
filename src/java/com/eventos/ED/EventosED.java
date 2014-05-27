@@ -27,7 +27,7 @@ public class EventosED implements Serializable {
     private String enderecoCompra;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EVENTOS")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long getIdEvento() {
         return idEvento;
     }
@@ -115,4 +115,35 @@ public class EventosED implements Serializable {
     public void setDescricaoEvento(String descricaoEvento) {
         this.descricaoEvento = descricaoEvento;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + (this.idEvento != null ? this.idEvento.hashCode() : 0);
+        hash = 83 * hash + (this.titulo != null ? this.titulo.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EventosED other = (EventosED) obj;
+        if (this.idEvento != other.idEvento && (this.idEvento == null || !this.idEvento.equals(other.idEvento))) {
+            return false;
+        }
+        if ((this.titulo == null) ? (other.titulo != null) : !this.titulo.equals(other.titulo)) {
+            return false;
+        }
+        if ((this.precoIngresso == null) ? (other.precoIngresso != null) : !this.precoIngresso.equals(other.precoIngresso)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
