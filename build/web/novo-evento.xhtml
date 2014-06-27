@@ -1,77 +1,110 @@
 <!DOCTYPE HTML>
-
-<html>
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Eventos</title>
-	
-	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/styles.css" rel="stylesheet">
-	<!--http://bootswatch.com/superhero/-->
-	
-</head>
-
-<body>
-
-<div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="../" class="navbar-brand">Eventos</a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav">
-            <li class="active">
-              <a href="#">Criar novo evento</a>
-            </li>
-          </ul>
-
-        </div>
-      </div>
-    </div>
-
-	<div class="container main-container">
-		<div class="row">
-			  <div class="col-lg-12">
-				<section>
-				
-					<article>
-						<header>
-							<h1>Criar novo evento</h1>
-						</header>
-						
-						<form>
-							<input type="text" placeholder="Título do evento" />
-							<input type="text" placeholder="Data" />
-							<input type="text" placeholder="Endereço" />
-							<input type="file" placeholder="Imagem" />
-							<textarea placeholder="Descrição do evento"></textarea>
-						</form>
-						
-					</article>
-	
-				</section>
-			</div>
-		</div>
-
-		<footer>
-			<div class="row">
-			  <div class="col-lg-12">
-
-				<p>Desenvolvido por Ellen, Gabriela, Tatiane e Vanessa para o trabalho final de Programação para Internet II</p>
-
-			  </div>
-			</div>
-		</footer>
-	</div>
-
-</body>
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xml:lang="pt-BR">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Eventos</title>
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+            <link href="css/styles.css" rel="stylesheet">
+                <!--http://bootswatch.com/superhero/-->
+    </h:head>
+    <h:body>
+        <f:view>
+            <div class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a href="../" class="navbar-brand">Eventos</a>
+                        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse" id="navbar-main">
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href="#">Criar novo evento</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container main-container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section>
+                            <article>
+                                <header>
+                                    <h1>Criar novo evento</h1>
+                                </header>
+                                <h:form id="formEvento" acceptcharset="ISO-8859-1">
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel value="Título do evento:" for="tituloEvento" />
+                                        <h:panelGroup>
+                                            <h:inputText id="tituloEvento" label="Nome" value="#{EventosMB.eventoED.titulo}" required="true">
+                                                <f:validateLength maximum="60" />
+                                            </h:inputText>
+                                            <h:message for="tituloEvento" errorClass="errorMessage" />
+                                        </h:panelGroup>
+                                        
+                                        <h:outputLabel value="Data:" for="dataEvento" />
+                                        <h:panelGroup>
+                                            <h:inputText id="dataEvento" label="Data" value="#{EventosMB.eventoED.dataEvento}" required="true">
+                                                <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+                                                <f:validateLength maximum="60" />
+                                            </h:inputText>
+                                            <h:message for="dataEvento" errorClass="errorMessage" />
+                                        </h:panelGroup>
+                                        
+                                        <h:outputLabel value="Endereço:" for="endereco" />
+                                        <h:panelGroup>
+                                            <h:inputText id="endereco" label="Endereco" value="#{EventosMB.eventoED.enderecoEvento}" required="true">
+                                                <f:validateLength maximum="60" />
+                                            </h:inputText>
+                                            <h:message for="endereco" errorClass="errorMessage" />
+                                        </h:panelGroup>
+                                        
+                                        <h:outputLabel value="Imagem" for="imagem" />
+                                        <h:panelGroup>
+                                            <h:inputText id="imagem" label="Imagem" value="#{EventosMB.eventoED.imagem}" required="true">
+                                                <f:validateLength maximum="60" />
+                                            </h:inputText>
+                                            <h:message for="imagem" errorClass="errorMessage" />
+                                        </h:panelGroup>
+                                        
+                                        <h:outputLabel value="Descricao" for="descricao" />
+                                        <h:panelGroup>
+                                            <h:inputText id="descricao" label="Descricao" value="#{EventosMB.eventoED.descricaoEvento}" required="true">
+                                                <f:validateLength maximum="60" />
+                                            </h:inputText>
+                                            <h:message for="descricao" errorClass="errorMessage" />
+                                        </h:panelGroup>
+                                        
+                                    </h:panelGrid>
+                                    <!--
+                                    <input type="text" placeholder="Título do evento" />
+                                    <input type="text" placeholder="Data" />
+                                    <input type="text" placeholder="Endereço" />
+                                    <input type="file" placeholder="Imagem" />
+                                    <textarea placeholder="Descrição do evento"></textarea>
+                                    -->
+                                </h:form>
+                            </article>
+                        </section>
+                    </div>
+                </div>
+                <footer>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>Desenvolvido por Ellen, Gabriela, Tatiane e Vanessa para o trabalho final de Programação para Internet II</p>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </f:view>
+    </h:body>
 </html>

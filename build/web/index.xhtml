@@ -1,176 +1,220 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    
-    <h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Eventos</title>
-	
-	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/styles.css" rel="stylesheet">
-	<!--http://bootswatch.com/superhero/-->
-	<style>
-            #map_canvas {
-              height: 500px;
-                      width: 100%;
-              margin: 0px;
-              padding: 0px
-            }
-        </style>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-        <script>		
-            function initialize() {
-                    var enderecos = ["Rua Riachuelo, 408, Porto Alegre - RS", "Av. Getúlio Vargas, Porto Alegre - RS", "Av. José do Patrocinio, 100, Porto Alegre - RS"];
-                    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-                    for(i = 0; i <= enderecos.length; i++){
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Eventos</title>
+
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+            <link href="css/styles.css" rel="stylesheet">
+                <!--http://bootswatch.com/superhero/-->
+                <style>
+                    #map_canvas {
+                        height: 500px;
+                        width: 100%;
+                        margin: 0px;
+                        padding: 0px
+                    }
+                </style>
+                <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+                <script>
+                    function initialize() {
+                        var enderecos = ["Rua Riachuelo, 408, Porto Alegre - RS", "Av. Getúlio Vargas, Porto Alegre - RS", "Av. José do Patrocinio, 100, Porto Alegre - RS"];
+                        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+                        for (i = 0; i <= enderecos.length; i++) {
                             endereco = enderecos[i];
                             geocoder = new google.maps.Geocoder();
                             geocode(endereco);
 
                             var myOptions = {
-                                    zoom: 5,
-                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                zoom: 5,
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
                             }
+                        }
                     }
-            }
 
-            function geocode(address) {
-                    geocoder.geocode({
+                    function geocode(address) {
+                        geocoder.geocode({
                             'address': address,
                             'partialmatch': true
-                    }, geocodeResult);
-            }
+                        }, geocodeResult);
+                    }
 
-            function geocodeResult(results, status) {
-                    if (status == 'OK' && results.length > 0) {
+                    function geocodeResult(results, status) {
+                        if (status == 'OK' && results.length > 0) {
                             map.fitBounds(results[0].geometry.viewport);
 
                             var marker = new google.maps.Marker({
-                                    position: map.getCenter(),
-                                    map: map
+                                position: map.getCenter(),
+                                map: map
                             });
 
-                            var infoWindowContent = "<div style='float: left;'>"+results[0].formatted_address+"</div>";
-                            var infowindow = new google.maps.InfoWindow({content: infoWindowContent });
+                            var infoWindowContent = "<div style='float: left;'>" + results[0].formatted_address + "</div>";
+                            var infowindow = new google.maps.InfoWindow({content: infoWindowContent});
                             google.maps.event.addListener(marker, 'click', function() {
-                                    infowindow.open(map, marker);
+                                infowindow.open(map, marker);
                             });
 
-                    } else {
+                        } else {
                             alert("Não foi possível encontrar este endereço. " + status);
+                        }
                     }
-            }
 
-            google.maps.event.addDomListener(window, 'load', initialize);
-        </script>	
-</h:head>
+                    google.maps.event.addDomListener(window, 'load', initialize);
+                </script>	
+                </h:head>
 
-<body>
+                <h:body>
+                    <f:view>
 
-<div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="../" class="navbar-brand">Eventos</a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="novo-evento.html">Criar novo evento</a>
-            </li>
-          </ul>
+                        <div class="navbar navbar-default navbar-fixed-top">
+                            <div class="container">
+                                <div class="navbar-header">
+                                    <a href="../" class="navbar-brand">Eventos</a>
+                                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                                <div class="navbar-collapse collapse" id="navbar-main">
+                                    <h:form acceptcharset="ISO-8859-1">
+                                        <ul class="nav navbar-nav">
+                                            <li>
+                                                <h:commandLink value="Criar novo evento" action="#{EventosMB.novoEvento}" />
+                                                <!-- <a href="novo-evento.html">Criar novo evento</a> -->
+                                            </li>
+                                        </ul>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container main-container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <section>
+                                        <article>
+                                            <!-- <header><h1>Confira a lista dos eventos que estão acontecendo</h1></header> -->
 
-        </div>
-      </div>
-    </div>
+                                            <h:dataTable value="#{EventosMB.listaEventos}" var="item" border="1" cellpadding="2" cellspacing="0">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Confira a lista dos eventos que estão acontecendo" />
+                                                </f:facet>
+                                                 <h:column>
+                                                     <f:facet name="header">
+                                                         <h:outputText value="Título do evento" />
+                                                     </f:facet>
+                                                     <h:outputText value="#{item.titulo}" rendered="true" />
+                                                 </h:column>
+                                                <h:column>
+                                                     <f:facet name="header">
+                                                         <h:outputText value="Imagem do evento" />
+                                                     </f:facet>
+                                                     <h:outputText value="#{item.imagem}" rendered="true" />
+                                                 </h:column>
+                                                <h:column>
+                                                     <f:facet name="header">
+                                                         <h:outputText value="Descricao" />
+                                                     </f:facet>
+                                                     <h:outputText value="#{item.descricaoEvento}" rendered="true" />
+                                                 </h:column>                                                
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Data" />
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.dataEvento}" rendered="true">
+                                                        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+                                                    </h:outputText>
+                                                    <f:attribute value="center" name="align" />
+                                                </h:column>
+                                                <h:column>
+                                                     <f:facet name="header">
+                                                         <h:outputText value="Local" />
+                                                     </f:facet>
+                                                     <h:outputText value="#{item.nomeLocal}" rendered="true" />
+                                                 </h:column>
+                                                <h:column>
+                                                     <f:facet name="header">
+                                                         <h:outputText value="Preço" />
+                                                     </f:facet>
+                                                     <h:outputText value="#{item.precoIngresso}" rendered="true" />
+                                                 </h:column>
 
-	<div class="container main-container">
-		<div class="row">
-			  <div class="col-lg-12">
-				<section>
-				
-					<article>
-						<header>
-							<h1>Confira a lista dos eventos que estão acontecendo</h1>
-						</header>
-						
-						<ul class="list-boxes">
-							<li class="col-lg-3">
-								<div class="box">
-									<div class="box-title">Título do evento</div>
-									<img class="img-responsive" src="img/no-photo-available.gif" />
-									<div class="box-text">Lorem ipsum dollor</div>
-								</div>
-							</li>
-							<li class="col-lg-3">
-								<div class="box">
-									<div class="box-title">Título do evento 2</div>
-									<img class="img-responsive" src="img/no-photo-available.gif" />
-									<div class="box-text">Lorem ipsum dollor</div>
-								</div>
-							</li>
-							<li class="col-lg-3">
-								<div class="box">
-									<div class="box-title">Título do evento 3</div>
-									<img class="img-responsive" src="img/no-photo-available.gif" />
-									<div class="box-text">Lorem ipsum dollor</div>
-								</div>
-							</li>
-							<li class="col-lg-3">
-								<div class="box">
-									<div class="box-title">Título do evento 4</div>
-									<img class="img-responsive" src="img/no-photo-available.gif" />
-									<div class="box-text">Lorem ipsum dollor</div>
-								</div>
-							</li>
-							<li class="col-lg-3">
-								<div class="box">
-									<div class="box-title">Título do evento 5</div>
-									<img class="img-responsive" src="img/no-photo-available.gif" />
-									<div class="box-text">Lorem ipsum dollor</div>
-								</div>
-							</li>
-							<li class="col-lg-3">
-								<div class="box">
-									<div class="box-title">Título do evento 6</div>
-									<img class="img-responsive" src="img/no-photo-available.gif" />
-									<div class="box-text">Lorem ipsum dollor</div>
-								</div>
-							</li>
-							<li class="col-lg-3">
-								<div class="box">
-									<div class="box-title">Título do evento 7</div>
-									<img class="img-responsive" src="img/no-photo-available.gif" />
-									<div class="box-text">Lorem ipsum dollor</div>
-								</div>
-							</li>
-						</ul>
-					</article>
-					
-					<div id="map_canvas"></div>
-					
-				</section>
-			</div>
-		</div>
+                                            </h:dataTable>
 
-		<footer>
-			<div class="row">
-			  <div class="col-lg-12">
+                                            <!--                               
+                                            <ul class="list-boxes">
+                                                <li class="col-lg-3">
+                                                    <div class="box">
+                                                        <div class="box-title">Título do evento</div>
+                                                        <img class="img-responsive" src="img/no-photo-available.gif" />
+                                                        <div class="box-text">Lorem ipsum dollor</div>
+                                                    </div>
+                                                </li>
+                                                <li class="col-lg-3">
+                                                    <div class="box">
+                                                        <div class="box-title">Título do evento 2</div>
+                                                        <img class="img-responsive" src="img/no-photo-available.gif" />
+                                                        <div class="box-text">Lorem ipsum dollor</div>
+                                                    </div>
+                                                </li>
+                                                <li class="col-lg-3">
+                                                    <div class="box">
+                                                        <div class="box-title">Título do evento 3</div>
+                                                        <img class="img-responsive" src="img/no-photo-available.gif" />
+                                                        <div class="box-text">Lorem ipsum dollor</div>
+                                                    </div>
+                                                </li>
+                                                <li class="col-lg-3">
+                                                    <div class="box">
+                                                        <div class="box-title">Título do evento 4</div>
+                                                        <img class="img-responsive" src="img/no-photo-available.gif" />
+                                                        <div class="box-text">Lorem ipsum dollor</div>
+                                                    </div>
+                                                </li>
+                                                <li class="col-lg-3">
+                                                    <div class="box">
+                                                        <div class="box-title">Título do evento 5</div>
+                                                        <img class="img-responsive" src="img/no-photo-available.gif" />
+                                                        <div class="box-text">Lorem ipsum dollor</div>
+                                                    </div>
+                                                </li>
+                                                <li class="col-lg-3">
+                                                    <div class="box">
+                                                        <div class="box-title">Título do evento 6</div>
+                                                        <img class="img-responsive" src="img/no-photo-available.gif" />
+                                                        <div class="box-text">Lorem ipsum dollor</div>
+                                                    </div>
+                                                </li>
+                                                <li class="col-lg-3">
+                                                    <div class="box">
+                                                        <div class="box-title">Título do evento 7</div>
+                                                        <img class="img-responsive" src="img/no-photo-available.gif" />
+                                                        <div class="box-text">Lorem ipsum dollor</div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            -->
+                                        </article>
+                                        <div id="map_canvas"></div>
+                                    </section>
+                                </div>
+                            </div>
+                            <footer>
+                                <div class="row">
+                                    <div class="col-lg-12">
 
-				<p>Desenvolvido por Ellen, Gabriela, Tatiane e Vanessa para o trabalho final de Programação para Internet II</p>
+                                        <p>Desenvolvido por Ellen, Gabriela, Tatiane e Vanessa para o trabalho final de Programação para Internet II</p>
 
-			  </div>
-			</div>
-		</footer>
-	</div>
-
-</body>
-
-</html>
+                                    </div>
+                                </div>
+                            </footer>
+                        </div>
+                    </f:view>
+                </h:body>
+                </html>

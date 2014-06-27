@@ -1,7 +1,7 @@
 package com.eventos.BD;
 
 import com.eventos.ED.EventosED;
-import com.senac.RN.EventosRN;
+import com.eventos.RN.EventosRN;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,12 +11,12 @@ import javax.persistence.TypedQuery;
 
 public class EventosBD {
 
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("Cadastro_Eventos");
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("EventosPU");
 
-    public void salva(EventosED eventosED) throws Exception {
+    public void salva(EventosED eventosED) {
         EventosRN eventoRN = new EventosRN();
 
-        if (eventoRN.validaIncluir(eventosED)) {
+        try {
             EntityManager em = null;
             try {
                 em = emf.createEntityManager();
@@ -34,8 +34,8 @@ public class EventosBD {
                     em.close();
                 }
             }
-        } else {
-            throw new Exception("Campos obrigatórios não preenchidos");
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar: " + e);
         }
     }
 
@@ -45,6 +45,9 @@ public class EventosBD {
             em = emf.createEntityManager();
             TypedQuery<EventosED> q = em.createQuery("select object(o) from EventoED as o", EventosED.class);
             return q.getResultList();
+        } catch (Exception e) {
+            System.out.println("Erro ao listar os dados: " + e);
+            return null;
         } finally {
             if (em != null) {
                 em.close();
@@ -57,6 +60,9 @@ public class EventosBD {
         try {
             em = emf.createEntityManager();
             return em.find(EventosED.class, new Long(id));
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar um evento: " + e);
+            return null;
         } finally {
             if (em != null) {
                 em.close();
@@ -79,11 +85,12 @@ public class EventosBD {
             }
             em.remove(eventosED);
             em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Erro ao deletar: " + e);
         } finally {
             if (em != null) {
                 em.close();
             }
         }
     }
-
 }

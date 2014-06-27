@@ -27,7 +27,7 @@ public class EventosED implements Serializable {
     private String enderecoCompra;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EVENTOS")
     public Long getIdEvento() {
         return idEvento;
     }
@@ -144,6 +144,4 @@ public class EventosED implements Serializable {
         }
         return true;
     }
-    
-    
 }
